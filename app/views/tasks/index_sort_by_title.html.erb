@@ -1,0 +1,101 @@
+<%= form_tag delete_multiple_tasks_path, method: :delete do %>
+
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <style>
+      a.btn:not(.btn-info) {
+        display: none;
+      }
+
+      .table:hover .btn {
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <div class="col-md-25 col-md-offset-1">
+    <% if user_signed_in? %>
+      <span>Hello, <%= current_user.email %></span>
+      <%= link_to 'Log out', destroy_user_session_path, class: "btn btn-danger", :method => :delete %>
+    <% else %>
+      <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+      <%= link_to 'Log in', new_user_session_path %>
+      or <%= link_to 'Registration', new_user_registration_path %>
+    <% end %>
+
+
+    <div class='container page-content' id='page-content'>
+      <div id="flash-messages">
+        <div class="alert alert-success alert-noajax">Signed in successfully.</div>
+      </div>
+    </div>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+
+    <table class="table table-striped">
+
+      <tr>
+        <ul class="button-group">
+          Sort by: &nbsp;
+          <li><%= sortable 'Title', 'name', 'asc' %></li>
+          <li><%= sortable 'Created Date', 'created_at', 'date' %></li>
+        </ul>
+        <%= link_to 'Mark as done', index_sort_by_title_path, class: "btn btn-info" %>
+
+      </tr>
+      <tr>
+        <td class="col-md-1">ToDo</td>
+      </tr>
+      <% @tasks.each do |task| %>
+        <tr>
+          <% unless task.done %>
+            <% if task.user_id == current_user.id %>
+              <td><%= check_box_tag "cb_tasks[]", task.id %>
+                <%= link_to task.title, task, class: "btn btn-info" %></td>
+              <td><%= link_to 'Edit', edit_task_path(task.id), class: "btn btn-primary" %>
+                <%= link_to 'Mark as done', change_to_done_path(task.id), class: "btn btn-warning" %>
+                <%= link_to 'Destroy', task, class: "btn btn-danger", method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+
+    <br>
+
+    <table class="table table-striped">
+      <tr>
+        <td class="col-md-1">Done</td>
+      </tr>
+      <% @tasks.each do |task| %>
+        <tr>
+          <% if task.done %>
+            <% if task.user_id == current_user.id %>
+              <td><%= check_box_tag "cb_tasks[]", task.id %>
+                <%= link_to task.title, task, class: "btn btn-info" %></td>
+
+              <td><%= link_to 'Edit', edit_task_path(task), class: "btn btn-primary" %>
+                <%= link_to 'Mark as to do', change_to_todo_path(task.id), class: "btn btn-success" %>
+                <%= link_to 'Destroy', task, class: "btn btn-danger", method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+
+    <%= submit_tag "Delete selected", class: "btn btn-primary" %>
+    <%= submit_tag "Check all", class: "btn btn-primary" %>
+    <br>
+    <br>
+
+    <%= link_to 'New Task', new_task_path, class: "btn btn-info" %>
+
+<% end %>
+
+
+
+</div>
+
+

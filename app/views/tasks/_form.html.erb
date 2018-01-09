@@ -1,0 +1,64 @@
+<div class="col-md-2 col-md-offset-5">
+  <%= form_with(model: task, local: true) do |form| %>
+    <% if task.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+        <ul>
+          <% task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <table class="table table-striped">
+      <div class="field">
+        <tr>
+          <td><%= form.label :title, class: "form-control "%>
+          </td>
+          <td>
+            <%= form.text_field :title, id: :task_title %>
+          </td>
+        </tr>
+      </div>
+
+      <tr>
+        <div class="field">
+          <td><%= form.label :description %></td>
+          <td><%= form.text_area :description, id: :task_description, class: "form-control", rows: 6 %></td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td><%= form.label :priority %></td>
+          <td><%= form.number_field :priority, id: :task_priority, class: "form-control " %></td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td><%= form.label :due %></td>
+          <td><%= form.date_field :due, id: :task_due, class: "form-control due_date datepicker", value: "#{@task.due ? @task.due.strftime("%d-%m-%Y") : Time.now.strftime("%d-%m-%Y")}" %></td>
+        </div>
+      </tr>
+      <tr>
+        <div class="field">
+          <td><%= form.label :done %></td>
+          <td><%= form.check_box :done, id: :task_done %></td>
+        </div>
+      </tr>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    </table>
+
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                dateFormat: "dd-mm-yy",
+                minDate: new Date(),
+            });
+        });
+    </script>
+
+  <% end %>
+</div>

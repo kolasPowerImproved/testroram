@@ -1,0 +1,69 @@
+<%= form_tag delete_multiple_tasks_path, method: :delete do %>
+  <% if user_signed_in? %>
+    <span>Здравствуйте, <%= current_user.email %></span>
+    <%= link_to 'Log out', destroy_user_session_path, :method => :delete %>
+  <% else %>
+    <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+    <%= link_to 'Log in', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+  <% end %>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+      <th colspan="2">Tasks<br></th>
+      </div>
+    <ul class="button-group">
+      Sort by: &nbsp;
+      <li><%= sortable 'Title', 'name', 'asc' %></li>
+      <li><%= sortable 'Created Date', 'created_at', 'asc' %></li>
+    </ul>
+    <tr>
+      <td>Done</td>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <% if task.done %>
+          <td><%= check_box_tag "cb_tasks[]", task.id %></td>
+          <td><%= link_to task.title, task %></td>
+          <% if task.user_id == current_user.id %>
+            <td><%= link_to 'Edit', edit_task_path(task) %></td>
+            <td><%= link_to 'Mark as to do', change_to_todo_path(task.id) %></td>
+            <td><%= link_to 'Destroy', task, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+            <% end %><% end %>
+      </tr>
+    <% end %>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th colspan="2">Tasks<br></th>
+    </tr>
+    <tr>
+      <td>ToDo</td>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <% unless task.done %>
+          <td><%= check_box_tag "cb_tasks[]", task.id %></td>
+          <td><%= link_to task.title, task %></td>
+          <% if task.user_id == current_user.id %>
+            <td><%= link_to 'Edit', edit_task_path(task.id) %></td>
+            <td><%= link_to 'Mark as done', change_to_done_path(task.id) %></td>
+            <td><%= link_to 'Destroy', task, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= submit_tag "Delete selected" %>
+  <br>
+
+  <%= link_to 'New Task', new_task_path %>
+
+<% end %>
+
+
+
