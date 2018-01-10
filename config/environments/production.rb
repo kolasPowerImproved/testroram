@@ -92,7 +92,7 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = {host: ENV['PROD_MAIL_HOST']}
+  config.action_mailer.default_url_options = {host: 'radiant-journey-52383.herokuapp.com'}
   config.action_mailer.smtp_settings = {
       user_name:      ENV['SENDMAIL_USERNAME'],
       password:       ENV['SENDMAIL_PASSWORD'],
