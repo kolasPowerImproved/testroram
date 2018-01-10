@@ -90,17 +90,31 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.raise_delivery_errors = true
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.default_url_options = {host: 'radiant-journey-52383.herokuapp.com'}
+  # config.action_mailer.smtp_settings = {
+  #     user_name:      ENV['SENDMAIL_USERNAME'],
+  #     password:       ENV['SENDMAIL_PASSWORD'],
+  #     domain:         ENV['PROD_MAIL_HOST'],
+  #     address:       'smtp.gmail.com',
+  #     port:          '587',
+  #     authentication: :plain,
+  #     enable_starttls_auto: true
+  # }
+  #
+  #   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = {host: 'radiant-journey-52383.herokuapp.com'}
   config.action_mailer.smtp_settings = {
-      user_name:      ENV['SENDMAIL_USERNAME'],
-      password:       ENV['SENDMAIL_PASSWORD'],
-      domain:         ENV['PROD_MAIL_HOST'],
+      user_name:      'andreymakarov1994@gmail.com',
+      password:       '4443123505Qq',
+      domain:         'radiant-journey-52383.herokuapp.com',
       address:       'smtp.gmail.com',
       port:          '587',
       authentication: :plain,
       enable_starttls_auto: true
   }
+
 
 end
