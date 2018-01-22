@@ -108,7 +108,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {host: 'radiant-journey-52383.herokuapp.com'}
   config.action_mailer.smtp_settings = {
       user_name:      'andreymakarov1994@gmail.com',
-      password:       'gmail4443123505',
+      password:       '',
       domain:         'radiant-journey-52383.herokuapp.com',
       address:       'smtp.gmail.com',
       port:          '587',
